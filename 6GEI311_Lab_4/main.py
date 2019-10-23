@@ -7,7 +7,10 @@ from PIL import Image
 import random
 import string
 import timeit
+import sys
 
+sys.path.append(".\\x64\\Release")
+import time_tanh
 
 def visualize_runtimes(results, title):
     start,stop = np.array(results).T
@@ -40,6 +43,15 @@ def boucle(base=0):
         np.tanh(i)
     stop = time.time() - base
     return start, stop
+
+
+def boucle_cpp(base=0):
+    start = time.time() - base
+    print("Boucle running")
+    time_tanh.boucle()
+    stop = time.time() - base
+    return start, stop
+
     
 if __name__ == "__main__":
     #print(timeit.timeit(boucle, number=1))
@@ -48,6 +60,7 @@ if __name__ == "__main__":
     # Multi threading
     #visualize_runtimes(multithreading(boucle, N, 1), "Python: Single Thread")
     #visualize_runtimes(multithreading(boucle, N, 4), "Python: Multi Thread")
+    visualize_runtimes(multithreading(boucle_cpp, N, 1), "C++: Single Thread")
 
     # Multiprocessing
     #visualize_runtimes(multiprocessing(boucle, N, 1), "Python: Single Process")
