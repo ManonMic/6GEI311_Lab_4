@@ -78,7 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <TargetName>time_tanh</TargetName>
+    <TargetName>exec_time</TargetName>
     <TargetExt>.pyd</TargetExt>
     <IncludePath>C:\Program Files\Python36\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>C:\Program Files\Python36\libs;$(LibraryPath)</LibraryPath>

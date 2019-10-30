@@ -10,19 +10,19 @@ import timeit
 import sys
 
 sys.path.append(".\\x64\\Release")
-import time_tanh
+import exec_time
 
 def visualize_runtimes(results, title):
-    start,stop = np.array(results).T
-    props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-    fig, ax = plt.subplots()
-    plt.barh(range(len(start)),stop-start,left=start)
-    plt.grid(axis='x')
-    plt.ylabel("Tasks")
-    plt.xlabel("Seconds")
-    plt.title(title)
-    ax.text(0.05, 0.95, "Exec time: " + str(round(stop[-1]-start[0], 4)) + " seconds", transform=ax.transAxes, verticalalignment='top', bbox=props)
-    plt.show()
+	start,stop = np.array(results).T
+	props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+	fig, ax = plt.subplots()
+	plt.barh(range(len(start)),stop-start,left=start)
+	plt.grid(axis='x')
+	plt.ylabel("Tasks")
+	plt.xlabel("Seconds")
+	plt.title(title)
+	ax.text(0.05, 0.95, "Exec time: " + str(round(stop[-1]-start[0], 4)) + " seconds", transform=ax.transAxes, verticalalignment='top', bbox=props)
+	plt.show()
 
 def multithreading(func, iterations, workers):
     begin_time = time.time()
@@ -43,26 +43,18 @@ def boucle(base=0):
         np.tanh(i)
     stop = time.time() - base
     return start, stop
-
-
-def boucle_cpp(base=0):
-    start = time.time() - base
-    print("Boucle running")
-    time_tanh.boucle()
-    stop = time.time() - base
-    return start, stop
-
     
 if __name__ == "__main__":
-    #print(timeit.timeit(boucle, number=1))
-    N = 16
+	#print(timeit.timeit(boucle, number=1))
+	N = 16
 
-    # Multi threading
-    #visualize_runtimes(multithreading(boucle, N, 1), "Python: Single Thread")
-    #visualize_runtimes(multithreading(boucle, N, 4), "Python: Multi Thread")
-    visualize_runtimes(multithreading(boucle_cpp, N, 1), "C++: Single Thread")
+	# Multi threading
+	#visualize_runtimes(multithreading(boucle, 1, 1), "Python: Single Thread")
+	#visualize_runtimes(multithreading(boucle, 16, 4), "Python: Multi Thread")
+	visualize_runtimes(exec_time.thread_exec_time(1), "C++: Multi Thread")
+	#exec_time.thread_exec_time(16,1)
 
-    # Multiprocessing
-    #visualize_runtimes(multiprocessing(boucle, N, 1), "Python: Single Process")
-    #visualize_runtimes(multiprocessing(boucle, N, 4), "Python: Multi Process")
+	# Multiprocessing
+	#visualize_runtimes(multiprocessing(boucle, N, 1), "Python: Single Process")
+	#visualize_runtimes(multiprocessing(boucle, N, 4), "Python: Multi Process")
 
