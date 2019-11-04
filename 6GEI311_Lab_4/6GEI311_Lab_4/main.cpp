@@ -1,17 +1,28 @@
-#include "Header.h"
+#include "main.h"
 
 auto begin = std::chrono::system_clock::now();
 std::vector<std::vector<double>> time_results;
+std::mutex vectorLock;
 
-void boucle()
+void calculate(int id)
 {
 	auto start = std::chrono::high_resolution_clock::now();
 	for (volatile int i = 0; i < 999999; i++) { tanh(i); }
 	auto finish = std::chrono::high_resolution_clock::now();
-	time_results.push_back(std::vector<double>());
-	int last_index = time_results.size() - 1;
-	time_results[last_index].push_back(start.time_since_epoch().count() / 1000000000.0);
-	time_results[last_index].push_back(finish.time_since_epoch().count() / 1000000000.0);
+	std::vector<double> delta;
+	delta.push_back(start.time_since_epoch().count() / 1000000000.0);
+	delta.push_back(finish.time_since_epoch().count() / 1000000000.0);
+	// std::cout << "delta[0]: " <<  delta[0] << " delta[1]: " << delta[1] << std::endl;
+	vectorLock.lock();
+	time_results.push_back(delta);
+	for (int i = 0; i < time_results.size(); ++i)
+	{
+		for (int j = 0; j < time_results[i].size(); ++j)
+		{
+			std::cout << time_results[i][j] << std::endl;
+		}
+	}
+	vectorLock.unlock();
 }
 
 static PyObject* GetList(std::vector < std::vector<double>> list)
@@ -34,10 +45,13 @@ static PyObject* thread_exec_time(PyObject* self, PyObject* args)
 
 	std::cout << " workers: " << workers << std::endl;
 
-	std::vector<std::thread> threads;
-	for (int i = 0; i < workers; i++) { threads.push_back(std::thread(boucle)); }
-	for (int i = 0; i < workers; i++) { threads[i].join(); }
+	ctpl::thread_pool p(workers);
+	for (int i = 0; i < 16; ++i)
+	{
+		p.push(calculate);
+	}
 
+	p.stop(true);
 	return GetList(time_results);
 }
 
