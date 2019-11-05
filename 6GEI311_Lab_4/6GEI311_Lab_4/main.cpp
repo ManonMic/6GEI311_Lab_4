@@ -12,16 +12,8 @@ void calculate(int id)
 	std::vector<double> delta;
 	delta.push_back(start.time_since_epoch().count() / 1000000000.0);
 	delta.push_back(finish.time_since_epoch().count() / 1000000000.0);
-	// std::cout << "delta[0]: " <<  delta[0] << " delta[1]: " << delta[1] << std::endl;
 	vectorLock.lock();
 	time_results.push_back(delta);
-	for (int i = 0; i < time_results.size(); ++i)
-	{
-		for (int j = 0; j < time_results[i].size(); ++j)
-		{
-			std::cout << time_results[i][j] << std::endl;
-		}
-	}
 	vectorLock.unlock();
 }
 
@@ -42,8 +34,6 @@ static PyObject* thread_exec_time(PyObject* self, PyObject* args)
 	time_results.clear();
 	int workers;
 	PyArg_ParseTuple(args, "i", &workers);
-
-	std::cout << " workers: " << workers << std::endl;
 
 	ctpl::thread_pool p(workers);
 	for (int i = 0; i < 16; ++i)
