@@ -13,7 +13,7 @@ from tkinter import ttk
 
 
 sys.path.append(".\\x64\\Release")
-#import time_tanh
+import exec_time
 
 def boucle(base=0):
     start = time.time() - base
@@ -72,32 +72,34 @@ def interface_gui():
     window = tk.Tk()
     window.title("Les boucles d'exécution")
 
-    label_choice = tk.Label(window, text="Entrez le nombre de processus/threads à lancer :", font="Arial, 12", bd=20)
+    label_choice = tk.Label(window, text="Nombre de processus/threads à lancer (N) : ", font="Arial, 12", bd=20)
     label_choice.grid(column=0, row=4)
-    choice = tk.Spinbox(window, from_=0, to=100, font="Arial, 12")
-    choice.grid(column=1, row=4)
+    nb_workers = tk.Spinbox(window, from_=1, to=100, font="Arial, 12")
+    nb_workers.grid(column=1, row=4)
 
 
     button_simpleloop_python = tk.Button(window, text="Boucle simple (python)", font="Arial, 12", bg="#e77f67", command=boucle_simple)
     button_simpleloop_python.grid(column=0, row=1)
-    button_multiprocess_python = tk.Button(window, text="Boucle découpée en x processus (python)", 
+    button_multiprocess_python = tk.Button(window, text="Boucle découpée en N processus (Python)", 
                                            font="Arial, 12", bg="#e77f67", 
-                                           command= lambda: visualize_runtimes(multiprocessing(boucle, 16, int(choice.get())), "Python: multiprocessing"))
+                                           command= lambda: visualize_runtimes(multiprocessing(boucle, 16, int(nb_workers.get())), "Python: multiprocessing"))
     button_multiprocess_python.grid(column=0, row=2)
-    button_multithreads_python = tk.Button(window, text="Boucle découpée en x threads (python)", 
+    button_multithreads_python = tk.Button(window, text="Boucle découpée en N threads (Python)", 
                                            font="Arial, 12", bg="#e77f67", 
-                                           command= lambda: visualize_runtimes(multithreading(boucle, 16, int(choice.get())), "Python: multithreading"))
+                                           command= lambda: visualize_runtimes(multithreading(boucle, 16, int(nb_workers.get())), "Python: multithreading"))
     button_multithreads_python.grid(column=0, row=3)
 
     button_simpleloop_cpp = tk.Button(window, text="Boucle simple (C++)", font="Arial, 12", bg="#786fa6")
     button_simpleloop_cpp.grid(column=1, row=1)
-    button_multiprocess_cpp = tk.Button(window, text="Boucle découpée en x processus (C++)", font="Arial, 12", bg="#786fa6")
+    button_multiprocess_cpp = tk.Button(window, text="Boucle découpée en N processus (C++)", font="Arial, 12", bg="#786fa6")
     button_multiprocess_cpp.grid(column=1, row=2)
-    button_multithreads_cpp = tk.Button(window, text="Boucle découpée en x threads (C++)", font="Arial, 12", bg="#786fa6")
+    button_multithreads_cpp = tk.Button(window, text="Boucle découpée en N threads (C++)", 
+										font="Arial, 12", bg="#786fa6",
+										command=lambda: visualize_runtimes(exec_time.thread_exec_time(int(nb_workers.get())), "C++: multithreading"))
     button_multithreads_cpp.grid(column=1, row=3)
 
 
-    label_time = tk.Label(window, text="Cliquez sur une des stratégies pour afficher son temps d'exécution ici", 
+    label_time = tk.Label(window, text="Cliquez sur une des stratégies pour afficher son temps d'exécution pour 16 itérations", 
                           font="Arial, 12", bg="white", relief="ridge", padx=5, pady=5, bd=5)
     label_time.grid(column=0, row=5)
 
