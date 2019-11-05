@@ -29,6 +29,19 @@ static PyObject* GetList(std::vector < std::vector<double>> list)
 	return python_val;
 }
 
+
+static PyObject* simple_loop(PyObject* self, PyObject* args)
+{
+	auto start = std::chrono::high_resolution_clock::now();
+	for (volatile int i = 0; i < 999999; i++) { tanh(i); }
+	auto finish = std::chrono::high_resolution_clock::now();
+	auto delta = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
+
+	PyObject *pythonVal = Py_BuildValue("L", delta);
+	return pythonVal;
+}
+
+
 static PyObject* thread_exec_time(PyObject* self, PyObject* args)
 {
 	time_results.clear();
@@ -58,6 +71,7 @@ static PyObject* process_exec_time(PyObject* self, PyObject* args)
 static PyMethodDef methods[] = {
 	   { "thread_exec_time", thread_exec_time, METH_VARARGS, "Thread execution" },
 	   { "process_exec_time", process_exec_time, METH_VARARGS, "Process execution" },
+	   { "simple_loop", simple_loop, METH_VARARGS, "Simple execution"},
 	   { NULL, NULL }
 };
 

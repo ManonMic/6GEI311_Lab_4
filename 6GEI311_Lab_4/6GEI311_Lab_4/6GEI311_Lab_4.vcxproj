@@ -32,7 +32,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -80,8 +80,14 @@
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <TargetName>exec_time</TargetName>
     <TargetExt>.pyd</TargetExt>
-    <IncludePath>C:\Program Files\Python36\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>C:\Program Files\Python36\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\manon\AppData\Local\Programs\Python\Python37\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\manon\AppData\Local\Programs\Python\Python37\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>exec_time</TargetName>
+    <TargetExt>.pyd</TargetExt>
+    <IncludePath>C:\Users\manon\AppData\Local\Programs\Python\Python37\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\manon\AppData\Local\Programs\Python\Python37\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
