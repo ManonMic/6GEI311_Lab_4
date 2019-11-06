@@ -80,8 +80,8 @@
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <TargetName>exec_time</TargetName>
     <TargetExt>.pyd</TargetExt>
-    <IncludePath>C:\Users\manon\AppData\Local\Programs\Python\Python37\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\manon\AppData\Local\Programs\Python\Python37\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Python36\include;C:\Users\manon\AppData\Local\Programs\Python\Python37\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Python36\libs;C:\Users\manon\AppData\Local\Programs\Python\Python37\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>exec_time</TargetName>
