@@ -58,19 +58,8 @@ static PyObject* thread_exec_time(PyObject* self, PyObject* args)
 	return GetList(time_results);
 }
 
-static PyObject* process_exec_time(PyObject* self, PyObject* args)
-{
-	time_results.clear();
-	int iterations;
-	PyArg_ParseTuple(args, "i", &iterations);
-
-	PyObject *pythonVal = Py_BuildValue("");
-	return pythonVal;
-}
-
 static PyMethodDef methods[] = {
 	   { "thread_exec_time", thread_exec_time, METH_VARARGS, "Thread execution" },
-	   { "process_exec_time", process_exec_time, METH_VARARGS, "Process execution" },
 	   { "simple_loop", simple_loop, METH_VARARGS, "Simple execution"},
 	   { NULL, NULL }
 };
